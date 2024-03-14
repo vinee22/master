@@ -7,21 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45469EC02BA21D260044CE32 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45469EBE2BA21D260044CE32 /* Images.xcassets */; };
+		45469EC12BA21D260044CE32 /* LaunchImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 45469EBF2BA21D260044CE32 /* LaunchImage.png */; };
+		45469EC42BA221780044CE32 /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 45469EC32BA221780044CE32 /* Settings.plist */; };
+		45469EC62BA221C20044CE32 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45469EC52BA221C20044CE32 /* AppSettings.swift */; };
+		45469EC82BA2386C0044CE32 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45469EC72BA2386C0044CE32 /* LoginViewController.swift */; };
+		45469ECA2BA2388D0044CE32 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45469EC92BA2388D0044CE32 /* SignUpViewController.swift */; };
 		456C80A12BA1E1E4000E85DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C80A02BA1E1E4000E85DB /* AppDelegate.swift */; };
 		456C80A32BA1E1E4000E85DB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C80A22BA1E1E4000E85DB /* SceneDelegate.swift */; };
-		456C80A52BA1E1E4000E85DB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C80A42BA1E1E4000E85DB /* ViewController.swift */; };
+		456C80A52BA1E1E4000E85DB /* SignInSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456C80A42BA1E1E4000E85DB /* SignInSignUpViewController.swift */; };
 		456C80A82BA1E1E4000E85DB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 456C80A62BA1E1E4000E85DB /* Main.storyboard */; };
-		456C80AA2BA1E1E7000E85DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 456C80A92BA1E1E7000E85DB /* Assets.xcassets */; };
 		456C80AD2BA1E1E7000E85DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 456C80AB2BA1E1E7000E85DB /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		45469EBE2BA21D260044CE32 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Resources/Images.xcassets; sourceTree = "<group>"; };
+		45469EBF2BA21D260044CE32 /* LaunchImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LaunchImage.png; path = Resources/LaunchImage.png; sourceTree = "<group>"; };
+		45469EC32BA221780044CE32 /* Settings.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
+		45469EC52BA221C20044CE32 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppSettings.swift; path = "Interview Scheduler/AppSettings.swift"; sourceTree = SOURCE_ROOT; };
+		45469EC72BA2386C0044CE32 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		45469EC92BA2388D0044CE32 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		456C809D2BA1E1E4000E85DB /* Interview Scheduler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Interview Scheduler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		456C80A02BA1E1E4000E85DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		456C80A22BA1E1E4000E85DB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		456C80A42BA1E1E4000E85DB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		456C80A42BA1E1E4000E85DB /* SignInSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSignUpViewController.swift; sourceTree = "<group>"; };
 		456C80A72BA1E1E4000E85DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		456C80A92BA1E1E7000E85DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		456C80AC2BA1E1E7000E85DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		456C80AE2BA1E1E7000E85DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -37,6 +47,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		45469EBB2BA21A180044CE32 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				45469EBE2BA21D260044CE32 /* Images.xcassets */,
+				45469EBF2BA21D260044CE32 /* LaunchImage.png */,
+			);
+			name = Resources;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		45469EC22BA221500044CE32 /* Target */ = {
+			isa = PBXGroup;
+			children = (
+				456C80AE2BA1E1E7000E85DB /* Info.plist */,
+				45469EBB2BA21A180044CE32 /* Resources */,
+				45469EC32BA221780044CE32 /* Settings.plist */,
+			);
+			path = Target;
+			sourceTree = "<group>";
+		};
 		456C80942BA1E1E4000E85DB = {
 			isa = PBXGroup;
 			children = (
@@ -56,13 +86,15 @@
 		456C809F2BA1E1E4000E85DB /* Interview Scheduler */ = {
 			isa = PBXGroup;
 			children = (
+				45469EC22BA221500044CE32 /* Target */,
 				456C80A02BA1E1E4000E85DB /* AppDelegate.swift */,
+				45469EC52BA221C20044CE32 /* AppSettings.swift */,
 				456C80A22BA1E1E4000E85DB /* SceneDelegate.swift */,
-				456C80A42BA1E1E4000E85DB /* ViewController.swift */,
+				456C80A42BA1E1E4000E85DB /* SignInSignUpViewController.swift */,
+				45469EC72BA2386C0044CE32 /* LoginViewController.swift */,
+				45469EC92BA2388D0044CE32 /* SignUpViewController.swift */,
 				456C80A62BA1E1E4000E85DB /* Main.storyboard */,
-				456C80A92BA1E1E7000E85DB /* Assets.xcassets */,
 				456C80AB2BA1E1E7000E85DB /* LaunchScreen.storyboard */,
-				456C80AE2BA1E1E7000E85DB /* Info.plist */,
 			);
 			path = "Interview Scheduler";
 			sourceTree = "<group>";
@@ -125,9 +157,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45469EC12BA21D260044CE32 /* LaunchImage.png in Resources */,
+				45469EC02BA21D260044CE32 /* Images.xcassets in Resources */,
 				456C80AD2BA1E1E7000E85DB /* LaunchScreen.storyboard in Resources */,
-				456C80AA2BA1E1E7000E85DB /* Assets.xcassets in Resources */,
 				456C80A82BA1E1E4000E85DB /* Main.storyboard in Resources */,
+				45469EC42BA221780044CE32 /* Settings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,8 +172,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				456C80A52BA1E1E4000E85DB /* ViewController.swift in Sources */,
+				45469ECA2BA2388D0044CE32 /* SignUpViewController.swift in Sources */,
+				456C80A52BA1E1E4000E85DB /* SignInSignUpViewController.swift in Sources */,
 				456C80A12BA1E1E4000E85DB /* AppDelegate.swift in Sources */,
+				45469EC62BA221C20044CE32 /* AppSettings.swift in Sources */,
+				45469EC82BA2386C0044CE32 /* LoginViewController.swift in Sources */,
 				456C80A32BA1E1E4000E85DB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,7 +325,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Interview Scheduler/Info.plist";
+				INFOPLIST_FILE = "Interview Scheduler/Target/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -315,7 +352,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Interview Scheduler/Info.plist";
+				INFOPLIST_FILE = "Interview Scheduler/Target/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

@@ -3,14 +3,46 @@
 <plist version="1.0">
 <dict>
 	<key>PrimaryColor</key>
-	<string>#A89AED</string>
+	<string>#AE75F8</string>
 	<key>SecondaryColor</key>
-	<string>#00FFFF</string>
+	<string>#FFDE59</string>
 	<key>BackgroundColor</key>
-	<string>#CB6CE6</string>
+	<string>#EED6FF</string>
 	<key>HighContrastColor</key>
 	<string>#FFFFFF</string>
 	<key>LowContrastColor</key>
 	<string>#666666</string>
+	<key>SignInSignUpTitle</key>
+	<string>Interview Scheduler</string>
+	<key>SignInSignUpDescription</key>
+	<string>Effortless Coordination, Seamless Interviews: Your Next Great Hire Awaits!</string>
+	<key>LoginButtonText</key>
+	<string>Log In</string>
+	<key>SignUpButtonText</key>
+	<string>Sign Up</string>
+	<key>LoginScreenTitle</key>
+	<string>Log In</string>
+	<key>SignUpScreenTitle</key>
+	<string>Sign Up</string>
+	<key>LoginEmailPlaceholderText</key>
+	<string>Enter Email Address</string>
+	<key>LoginPasswordPlaceholderText</key>
+	<string>Enter Password</string>
+	<key>LoginDontHaveAnAccount</key>
+	<string>Don&apos;t have an account?</string>
+	<key>SignupFirstNamePlaceholderText</key>
+	<string>Enter FirstName</string>
+	<key>SignupLastNamePlaceholderText</key>
+	<string>Enter LastName</string>
+	<key>SignupDateofBirthPlaceholderText</key>
+	<string>Enter Date of Birth</string>
+	<key>SignupEmailPlaceholderText</key>
+	<string>Enter Email Address</string>
+	<key>SignupPasswordPlaceholderText</key>
+	<string>Enter Password</string>
+	<key>SignupConfirmPasswordPlaceholderText</key>
+	<string>Enter Confirm Password</string>
+	<key>SignupAlreadyHaveAnAccountText</key>
+	<string>Already have an account?</string>
 </dict>
 </plist>
