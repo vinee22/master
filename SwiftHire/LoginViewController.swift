@@ -207,9 +207,14 @@ class LoginViewController: UIViewController {
             if let adminVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AdminViewController") as? AdminViewController {
                 navigationController?.pushViewController(adminVC, animated: true)
             }
-        } else {
+        }else if email == "test@guest.com" && password == "Test@123" {
+            // Navigate to AdminViewController
+            if let adminVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditAccountViewController") as? EditAccountViewController {
+                navigationController?.pushViewController(adminVC, animated: true)
+            }
+        }else {
             // Navigate to DashboardViewController
-            if let dashboardVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DashboardViewController") as? DashboardViewController {
+            if let dashboardVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditAccountViewController") as? EditAccountViewController {
                 navigationController?.pushViewController(dashboardVC, animated: true)
             }
         }

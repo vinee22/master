@@ -18,39 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        // Add data to Core Data entity
-        addDataToUserEntity()
         
         return true
     }
     
     
-    
-    func addDataToUserEntity() {
-        // Access the managed object context
-        let context = persistentContainer.viewContext
         
-        // Create a new instance of UserEntity
-        guard let newUser = NSEntityDescription.insertNewObject(forEntityName: "UserEntity", into: context) as? UserEntity else {
-            fatalError("Failed to create new UserEntity instance")
-        }
-        
-        // Set values for attributes
-        newUser.password = "password123"
-        newUser.firstName = "John"
-        newUser.lastName = "Doe"
-        newUser.email = "john.doe@example.com"
-        newUser.dateOfBirth = "1990-01-01" // Date of birth as string, adjust as needed
-        
-        // Save changes to the managed object context
-        do {
-            try context.save()
-            print("UserEntity data saved successfully")
-        } catch {
-            print("Failed to save UserEntity data: \(error)")
-        }
-    }
-    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

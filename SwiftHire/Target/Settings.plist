@@ -56,5 +56,7 @@
 	<string>Upload Resume</string>
 	<key>SubmitButtonText</key>
 	<string>Submit</string>
+	<key>AdminScreenTitle</key>
+	<string>Hiring Schedule</string>
 </dict>
 </plist>

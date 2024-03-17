@@ -7,14 +7,13 @@
 
 import Foundation
 import UIKit
-import UniformTypeIdentifiers
 
 class EditAccountViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIDocumentPickerDelegate, UITextFieldDelegate {
 
     // IBOutlet for Image View
     @IBOutlet weak var imageView: UIImageView!
     
-    @IBOutlet weak var pdfPickerButton: UIButton!
+    var user: User? // Property to hold the user data
         
     @IBOutlet weak var submitButton: UIButton!
     // Custom date picker for "Date of Birth"
@@ -28,7 +27,7 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
     var lastNameTextField = UITextField()
     var dateOfBirthTextField = UITextField()
     var emailAddressTextField = UITextField()
-    var pdfFileNameTextField = UITextField()
+    var passwordTextField = UITextField()
     
     // Outlet for the submit button
 //    var submitButton: UIButton!
@@ -42,19 +41,7 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
         backgroundImage.contentMode = .scaleAspectFill
         self.view.insertSubview(backgroundImage, at: 0)
         
-        // Load the original images
-        guard let backImage = UIImage(named: "BackIcon") else { return }
-        // Resize the back icon image
-        let resizedBackImage = backImage.resized(to: CGSize(width: 30, height: 30))
-        
-        // Tint the resized images
-        let tintedBackImage = resizedBackImage.withTintColor(AppSettings().primaryColor(), renderingMode: .alwaysOriginal)
-        
-        
         // Navigation Bar
-        let backButton = UIBarButtonItem(image: tintedBackImage, style: .plain, target: self, action: #selector(backButtonTapped))
-        navigationItem.leftBarButtonItem = backButton
-        
         
         title = AppSettings().profileScreenTitle()
         
@@ -63,6 +50,26 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 30) // Adjust font size as needed
         ]
         
+        // Load the original images
+        guard let logOutImage = UIImage(named: "logoutIcon") else { return }
+        // Resize the back icon image
+        let resizedlogOutImage = logOutImage.resized(to: CGSize(width: 30, height: 30))
+        
+        // Tint the resized images
+        let tintedlogOutImage = resizedlogOutImage.withTintColor(AppSettings().primaryColor(), renderingMode: .alwaysOriginal)
+        
+        let logOutButton = UIBarButtonItem(image: tintedlogOutImage, style: .plain, target: self, action: #selector(logOutButtonTapped))
+        navigationItem.leftBarButtonItem = logOutButton
+        
+        guard let NoticationImage = UIImage(named: "NotificationIcon") else { return }
+
+        let resizedNoticationImage = NoticationImage.resized(to: CGSize(width: 30, height: 30))
+
+        let tintedNoticationImage = resizedNoticationImage.withTintColor(AppSettings().primaryColor(), renderingMode: .alwaysOriginal)
+        
+        let noticationButton = UIBarButtonItem(image: tintedNoticationImage, style: .plain, target: self, action: #selector(noticationButtonTapped))
+        
+        navigationItem.rightBarButtonItem = noticationButton
         // Setup the date picker for "Date of Birth" text field
         setupDatePicker()
         
@@ -70,7 +77,7 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(tapGesture)
         
-        pdfPickerButton.addTarget(self, action: #selector(pdfPickerButtonTapped(_:)), for: .touchUpInside)
+//        pdfPickerButton.addTarget(self, action: #selector(pdfPickerButtonTapped(_:)), for: .touchUpInside)
         
         firstNameTextField.placeholder = AppSettings().signupFirstNamePlaceholderText()
         firstNameTextField.borderStyle = .roundedRect
@@ -126,22 +133,15 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
         emailAddressTextField.backgroundColor = AppSettings().highContrastColor()
         self.view.addSubview(emailAddressTextField)
         
-        pdfFileNameTextField.placeholder = AppSettings().pdfPlaceholderText()
-        pdfFileNameTextField.tintColor = AppSettings().secondaryColor()
-        pdfFileNameTextField.textColor = AppSettings().backgroundColor()
-        pdfFileNameTextField.autocapitalizationType = .none
-        pdfFileNameTextField.layer.cornerRadius = 10
-        pdfFileNameTextField.isUserInteractionEnabled = false
-        pdfFileNameTextField.backgroundColor = AppSettings().highContrastColor()
-        self.view.addSubview(pdfFileNameTextField)
         
-        
-        pdfPickerButton.setTitle(AppSettings().selectPDFButtonText(), for: .normal)
-        pdfPickerButton.backgroundColor = AppSettings().primaryColor()
-        pdfPickerButton.setTitleColor(AppSettings().highContrastColor(), for: .normal)
-        pdfPickerButton.layer.cornerRadius = 10
-        pdfPickerButton.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
-        self.view.addSubview(submitButton)
+        passwordTextField.placeholder = AppSettings().loginPasswordPlaceholderText()
+        passwordTextField.tintColor = AppSettings().secondaryColor()
+        passwordTextField.textColor = AppSettings().backgroundColor()
+        passwordTextField.autocapitalizationType = .none
+        passwordTextField.layer.cornerRadius = 10
+        passwordTextField.isUserInteractionEnabled = false
+        passwordTextField.backgroundColor = AppSettings().highContrastColor()
+        self.view.addSubview(passwordTextField)
         
         submitButton.setTitle(AppSettings().submitButtonText(), for: .normal)
         submitButton.backgroundColor = AppSettings().primaryColor()
@@ -156,8 +156,7 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
         lastNameTextField.translatesAutoresizingMaskIntoConstraints = false
         dateOfBirthTextField.translatesAutoresizingMaskIntoConstraints = false
         emailAddressTextField.translatesAutoresizingMaskIntoConstraints = false
-        pdfFileNameTextField.translatesAutoresizingMaskIntoConstraints = false
-        pdfPickerButton.translatesAutoresizingMaskIntoConstraints = false
+        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         submitButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
@@ -185,21 +184,25 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
                emailAddressTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
                emailAddressTextField.heightAnchor.constraint(equalToConstant: 50),
                
-               pdfFileNameTextField.topAnchor.constraint(equalTo: emailAddressTextField.bottomAnchor, constant: 10),
-               pdfFileNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-               pdfFileNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-               pdfFileNameTextField.heightAnchor.constraint(equalToConstant: 50),
-               
-               pdfPickerButton.topAnchor.constraint(equalTo: pdfFileNameTextField.bottomAnchor, constant: 20),
-               pdfPickerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-               pdfPickerButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-               pdfPickerButton.heightAnchor.constraint(equalToConstant: 50),
+               passwordTextField.topAnchor.constraint(equalTo: emailAddressTextField.bottomAnchor, constant: 10),
+               passwordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+               passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+               passwordTextField.heightAnchor.constraint(equalToConstant: 50),
 
-               submitButton.topAnchor.constraint(equalTo: pdfPickerButton.bottomAnchor, constant: 20),
+               submitButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
                submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
                submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
                submitButton.heightAnchor.constraint(equalToConstant: 50),
            ])
+        
+        // Check if user data is available
+        if let user = user {
+            // Set user data to text fields
+            firstNameTextField.text = user.firstName
+            lastNameTextField.text = user.lastName
+            emailAddressTextField.text = user.email
+            passwordTextField.text = user.password
+        }
         
     }
     
@@ -210,11 +213,6 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
         
         // Add a target to handle date changes
         datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
-    }
-    
-    @objc func backButtonTapped() {
-        // Handle back button action
-        navigationController?.popViewController(animated: true)
     }
     
     // Action method for date picker value changed
@@ -236,39 +234,19 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
     // UIImagePickerControllerDelegate method to handle image selection
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
-            imageView.image = selectedImage
+            imageView.image = selectedImage // Set selectedImage as the placeholder image for imageView
         }
         picker.dismiss(animated: true, completion: nil)
     }
     
-    // Action method for PDF picker button tap
-    @objc func pdfPickerButtonTapped(_ sender: UIButton) {
-        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.pdf])
-        documentPicker.delegate = self
-        documentPicker.modalPresentationStyle = .overFullScreen
-        present(documentPicker, animated: true, completion: nil)
-    }
-
-    // UIDocumentPickerDelegate method to handle selecting PDF documents
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        guard let selectedURL = urls.first else {
-            return
-        }
-        print("Selected PDF URL: \(selectedURL)")
-        // Get the PDF file name from the URL
-        let fileName = selectedURL.lastPathComponent
-        // Update the text field with the PDF file name
-        pdfFileNameTextField.text = fileName
-    }
-    
     // Action method for the submit button
-                               @objc func submitButtonTapped() {
+   @objc func submitButtonTapped() {
                                    // Retrieve data from text fields, image view, and PDF file name text field
                                    let firstName = firstNameTextField.text ?? ""
                                    let lastName = lastNameTextField.text ?? ""
                                    let dateOfBirth = dateOfBirthTextField.text ?? ""
                                    let emailAddress = emailAddressTextField.text ?? ""
-                                   let selectedPDFFileName = pdfFileNameTextField.text ?? ""
+                                   let password = passwordTextField.text ?? ""
                                    // Perform actions with the retrieved data, such as storing it or updating the stored details and files
 
                                    // Show alert
@@ -277,9 +255,26 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
                                    present(alert, animated: true, completion: nil)
                                }
 
+    @objc func noticationButtonTapped(_ sender: UIBarButtonItem) {
+        if let dashboardVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DashboardViewController") as? DashboardViewController {
+            navigationController?.pushViewController(dashboardVC, animated: true)
+        }    }
+    
     @objc func doneButtonTapped() {
         // Dismiss the keyboard or hide the date picker when the "Done" button is tapped
         dateOfBirthTextField.resignFirstResponder()
     }
     
+        @objc func logOutButtonTapped() {
+            navigationController?.popToRootViewController(animated: true)
+        }
+    
+}
+
+struct User {
+    var firstName: String
+    var lastName: String
+    var email: String
+    var password: String
+    // Other properties and methods
 }

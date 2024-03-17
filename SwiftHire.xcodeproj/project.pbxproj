@@ -11,7 +11,10 @@
 		4541272C2BA3F04000C66FC6 /* ImagePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4541272B2BA3F04000C66FC6 /* ImagePickerCell.swift */; };
 		455C8CFB2BA57BE500DC4241 /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C8CFA2BA57BE500DC4241 /* AdminViewController.swift */; };
 		455C8CFD2BA57E1E00DC4241 /* CandidateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C8CFC2BA57E1E00DC4241 /* CandidateTableViewCell.swift */; };
+		455C8D052BA5EECB00DC4241 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C8D042BA5EECB00DC4241 /* UserModel.swift */; };
+		4573C9E52BA6D50000A5AD41 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573C9E42BA6D50000A5AD41 /* Checkbox.swift */; };
 		458F7EA52BA3657D0040D032 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7EA42BA3657D0040D032 /* DashboardViewController.swift */; };
+		459440342BA63D3600EF04CB /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459440332BA63D3600EF04CB /* PersistenceController.swift */; };
 		45A0C2012BA486EE00FED62C /* CustomPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A0C2002BA486EE00FED62C /* CustomPushAnimator.swift */; };
 		45A9E4DB2BA33DE300EA05C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A9E4DA2BA33DE300EA05C9 /* AppDelegate.swift */; };
 		45A9E4DD2BA33DE300EA05C9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A9E4DC2BA33DE300EA05C9 /* SceneDelegate.swift */; };
@@ -34,7 +37,10 @@
 		4541272B2BA3F04000C66FC6 /* ImagePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerCell.swift; sourceTree = "<group>"; };
 		455C8CFA2BA57BE500DC4241 /* AdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		455C8CFC2BA57E1E00DC4241 /* CandidateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateTableViewCell.swift; sourceTree = "<group>"; };
+		455C8D042BA5EECB00DC4241 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		4573C9E42BA6D50000A5AD41 /* Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
 		458F7EA42BA3657D0040D032 /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
+		459440332BA63D3600EF04CB /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		45A0C2002BA486EE00FED62C /* CustomPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPushAnimator.swift; sourceTree = "<group>"; };
 		45A9E4D72BA33DE300EA05C9 /* SwiftHire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftHire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45A9E4DA2BA33DE300EA05C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -97,10 +103,13 @@
 				45A0C2002BA486EE00FED62C /* CustomPushAnimator.swift */,
 				458F7EA42BA3657D0040D032 /* DashboardViewController.swift */,
 				455C8CFC2BA57E1E00DC4241 /* CandidateTableViewCell.swift */,
+				459440332BA63D3600EF04CB /* PersistenceController.swift */,
+				4573C9E42BA6D50000A5AD41 /* Checkbox.swift */,
 				45A9E4F12BA33EAE00EA05C9 /* Target */,
 				45A9E4DA2BA33DE300EA05C9 /* AppDelegate.swift */,
 				45A9E4DC2BA33DE300EA05C9 /* SceneDelegate.swift */,
 				45A9E4E32BA33DE300EA05C9 /* SwiftHire.xcdatamodeld */,
+				455C8D042BA5EECB00DC4241 /* UserModel.swift */,
 			);
 			path = SwiftHire;
 			sourceTree = "<group>";
@@ -212,7 +221,10 @@
 				455C8CFB2BA57BE500DC4241 /* AdminViewController.swift in Sources */,
 				455C8CFD2BA57E1E00DC4241 /* CandidateTableViewCell.swift in Sources */,
 				45B7DDAD2BA43694003DB061 /* InterviewCell.swift in Sources */,
+				455C8D052BA5EECB00DC4241 /* UserModel.swift in Sources */,
 				4541272C2BA3F04000C66FC6 /* ImagePickerCell.swift in Sources */,
+				459440342BA63D3600EF04CB /* PersistenceController.swift in Sources */,
+				4573C9E52BA6D50000A5AD41 /* Checkbox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +352,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 898NQ7FL38;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftHire/Target/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -367,6 +380,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 898NQ7FL38;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SwiftHire/Target/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

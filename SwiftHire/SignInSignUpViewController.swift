@@ -23,7 +23,7 @@ class SignInSignUpViewController: UIViewController {
         self.view.insertSubview(backgroundImage, at: 0)
         
         // White Background View
-        let whiteBackgroundView = UIView(frame: CGRect(x: 0, y: 700, width: view.frame.width, height: 330))
+        let whiteBackgroundView = UIView(frame: CGRect(x: 0, y: 500, width: view.frame.width, height: 500))
         whiteBackgroundView.backgroundColor = AppSettings().highContrastColor()
         whiteBackgroundView.layer.cornerRadius = 10
         view.addSubview(whiteBackgroundView)
@@ -43,7 +43,7 @@ class SignInSignUpViewController: UIViewController {
         view.addSubview(loginButton)
         
         // signup Button
-        signupButton = UIButton(frame: CGRect(x: 50, y: 820, width: view.frame.width - 100, height: 50))
+        signupButton = UIButton(frame: CGRect(x: 50, y: 830, width: view.frame.width - 100, height: 50))
         signupButton.setTitle(AppSettings().signUpButtonText(), for: .normal)
         signupButton.tintColor = AppSettings().highContrastColor()
         signupButton.layer.cornerRadius = 10

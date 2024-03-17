@@ -147,6 +147,12 @@ class AppSettings {
         return setting
     }
     
+    func adminScreenTitle() -> String {
+        guard let setting = settingData?["AdminScreenTitle"] as? String else {
+            return "" }
+        return setting
+    }
+    
     func primaryColor() -> UIColor {
         let setting = settingData?["PrimaryColor"] as? String ?? ""
         guard let color = UIColor(hexString: setting) else {

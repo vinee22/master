@@ -31,19 +31,28 @@ class DashboardViewController: UIViewController {
         
         // Load interview details (replace this with your logic to fetch interview details)
         loadInterviewDetails()
-        navigationItem.hidesBackButton = true
         
-        guard let editImage = UIImage(named: "EditIcon") else { return }
-
-        let resizedEditImage = editImage.resized(to: CGSize(width: 50, height: 50))
-
-        let tintedEditImage = resizedEditImage.withTintColor(AppSettings().primaryColor(), renderingMode: .alwaysOriginal)
+        // Load the original images
+        guard let backImage = UIImage(named: "BackIcon") else { return }
+        // Resize the back icon image
+        let resizedBackImage = backImage.resized(to: CGSize(width: 30, height: 30))
+        
+        // Tint the resized images
+        let tintedBackImage = resizedBackImage.withTintColor(AppSettings().primaryColor(), renderingMode: .alwaysOriginal)
+        
+        let backButton = UIBarButtonItem(image: tintedBackImage, style: .plain, target: self, action: #selector(backButtonTapped))
+        navigationItem.leftBarButtonItem = backButton
+        
+//        guard let editImage = UIImage(named: "EditIcon") else { return }
+//
+//        let resizedEditImage = editImage.resized(to: CGSize(width: 50, height: 50))
+//
+//        let tintedEditImage = resizedEditImage.withTintColor(AppSettings().primaryColor(), renderingMode: .alwaysOriginal)
         // Create a UIBarButtonItem with an edit icon
-        let editButton = UIBarButtonItem(image: tintedEditImage, style: .plain, target: self, action: #selector(editButtonTapped))
-        navigationItem.leftBarButtonItem = editButton
+//        let editButton = UIBarButtonItem(image: tintedEditImage, style: .plain, target: self, action: #selector(editButtonTapped))
         
         // Set the edit button as the right bar button item
-        navigationItem.rightBarButtonItem = editButton
+//        navigationItem.rightBarButtonItem = editButton
         // Set table view delegate and data source
         tableView.delegate = self
         tableView.dataSource = self
@@ -57,12 +66,12 @@ class DashboardViewController: UIViewController {
         tableView.register(InterviewCell.self, forCellReuseIdentifier: "InterviewCell")
         
         // Set up logout button action
-        logoutButton.setTitle(AppSettings().logoutButtonText(), for: .normal)
-        logoutButton.setTitleColor(AppSettings().primaryColor(), for: .normal)
-        logoutButton.backgroundColor = AppSettings().highContrastColor()
-        logoutButton.layer.cornerRadius = 10
-        logoutButton.isUserInteractionEnabled = true
-        logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+//        logoutButton.setTitle(AppSettings().logoutButtonText(), for: .normal)
+//        logoutButton.setTitleColor(AppSettings().primaryColor(), for: .normal)
+//        logoutButton.backgroundColor = AppSettings().highContrastColor()
+//        logoutButton.layer.cornerRadius = 10
+//        logoutButton.isUserInteractionEnabled = true
+//        logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
     }
     
     // Function to load interview details (replace this with your own logic to fetch interview details)
@@ -75,15 +84,19 @@ class DashboardViewController: UIViewController {
         ]
     }
     
-    // MARK: - Button Action
-    @objc func logoutButtonTapped() {
-        navigationController?.popToRootViewController(animated: true)
+    @objc func backButtonTapped() {
+        // Handle back button action
+        navigationController?.popViewController(animated: true)
     }
+//    // MARK: - Button Action
+//    @objc func logoutButtonTapped() {
+//        navigationController?.popToRootViewController(animated: true)
+//    }
     
-    @objc func editButtonTapped(_ sender: UIBarButtonItem) {
-        if let dashboardVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditAccountViewController") as? EditAccountViewController {
-            navigationController?.pushViewController(dashboardVC, animated: true)
-        }    }
+//    @objc func editButtonTapped(_ sender: UIBarButtonItem) {
+//        if let dashboardVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditAccountViewController") as? EditAccountViewController {
+//            navigationController?.pushViewController(dashboardVC, animated: true)
+//        }    }
 }
 
 // MARK: - UITableViewDataSource

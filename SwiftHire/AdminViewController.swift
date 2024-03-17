@@ -8,90 +8,163 @@
 import Foundation
 import UIKit
 
-import UIKit
-
-class AdminViewController: UIViewController {
+class AdminViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    // Array to store candidate details
-    var candidateDetails: [CandidateviewDetail] = []
+    // MARK: - Properties
     
-    // Outlet for the table view
-    @IBOutlet weak var tableView: UITableView!
+    var candidateNameTextField = UITextField()
+    var interviewTypeTextField = UITextField()
+    var interviewTypePicker = UIPickerView()
+    var interviewTypeLabels = ["On-Site Interview", "Behavioral Interview", "Technical Interview", "Group Discussion Interview", "Panel Interview", "Phone Interview", "Video Interview", "Assessment Interview"]
+    var datePicker = UIDatePicker()
+    var timePicker = UIDatePicker()
+    var submitButton = UIButton()
     
-    // Outlet for the logout button
-    @IBOutlet weak var logoutButton: UIButton!
+    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
         // Background Image
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
         backgroundImage.image = UIImage(named: "BackgroundImage")
         backgroundImage.contentMode = .scaleAspectFill
-        self.view.insertSubview(backgroundImage, at: 0)
+        view.insertSubview(backgroundImage, at: 0)
         
-        // Load candidate details (replace this with your logic to fetch candidate details)
-        loadCandidateDetails()
+        // Navigation Bar
+        title = AppSettings().adminScreenTitle()
         
-        // Set up table view delegate and data source
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.backgroundColor = UIColor.white // Adjust background color as needed
-        
-        // Register custom cell if you have one
-        tableView.register(CandidateTableViewCell.self, forCellReuseIdentifier: "CandidateCell")
-        
-        // Set up logout button action
-        logoutButton.setTitle("Logout", for: .normal) // Customize logout button text
-        logoutButton.setTitleColor(UIColor.blue, for: .normal) // Customize logout button text color
-        logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
-    }
-    
-    // Function to load candidate details (replace this with your own logic to fetch candidate details)
-    func loadCandidateDetails() {
-        // Example data for demonstration
-        candidateDetails = [
-            CandidateviewDetail(firstName: "John", lastName: "Doe"),
-            CandidateviewDetail(firstName: "Jane", lastName: "Smith")
-            // Add more candidate details as needed
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: AppSettings().primaryColor(),
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 30) // Adjust font size as needed
         ]
+        view.backgroundColor = .white
+        
+        // Load the original images
+        guard let logOutImage = UIImage(named: "logoutIcon") else { return }
+        // Resize the back icon image
+        let resizedlogOutImage = logOutImage.resized(to: CGSize(width: 30, height: 30))
+        
+        // Tint the resized images
+        let tintedlogOutImage = resizedlogOutImage.withTintColor(AppSettings().primaryColor(), renderingMode: .alwaysOriginal)
+        
+        let logOutButton = UIBarButtonItem(image: tintedlogOutImage, style: .plain, target: self, action: #selector(logOutButtonTapped))
+        navigationItem.leftBarButtonItem = logOutButton
+
+        
+        setupUI()
     }
     
-    // MARK: - Button Action
-    @objc func logoutButtonTapped() {
+    // MARK: - UI Setup
+    
+    private func setupUI() {
+        // Candidate Name Text Field
+        candidateNameTextField.placeholder = "Candidate Name"
+        candidateNameTextField.borderStyle = .roundedRect
+        view.addSubview(candidateNameTextField)
+        
+        // Interview Type Text Field
+        interviewTypeTextField.placeholder = "Select Interview Types"
+        interviewTypeTextField.borderStyle = .roundedRect
+        interviewTypeTextField.inputView = interviewTypePicker
+        view.addSubview(interviewTypeTextField)
+        
+        // Interview Type Picker
+        interviewTypePicker.delegate = self
+        interviewTypePicker.dataSource = self
+        
+        // Date Picker
+        datePicker.datePickerMode = .date
+        datePicker.backgroundColor = AppSettings().highContrastColor()
+        view.addSubview(datePicker)
+        
+        // Time Picker
+        timePicker.datePickerMode = .time
+        timePicker.backgroundColor = AppSettings().highContrastColor()
+        view.addSubview(timePicker)
+        
+        // Submit Button
+        submitButton.setTitle("Submit", for: .normal)
+        submitButton.backgroundColor = AppSettings().primaryColor()
+        submitButton.setTitleColor(AppSettings().highContrastColor(), for: .normal)
+        submitButton.layer.cornerRadius = 8
+        submitButton.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
+        view.addSubview(submitButton)
+        
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        // Candidate Name Text Field Constraints
+        candidateNameTextField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            candidateNameTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            candidateNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            candidateNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            candidateNameTextField.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        // Interview Type Text Field Constraints
+        interviewTypeTextField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            interviewTypeTextField.topAnchor.constraint(equalTo: candidateNameTextField.bottomAnchor, constant: 20),
+            interviewTypeTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            interviewTypeTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            interviewTypeTextField.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        // Date Picker Constraints
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            datePicker.topAnchor.constraint(equalTo: interviewTypeTextField.bottomAnchor, constant: 20),
+            datePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            datePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        ])
+        
+        // Time Picker Constraints
+        timePicker.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            timePicker.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 20),
+            timePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            timePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        ])
+        
+        // Submit Button Constraints
+        submitButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            submitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+            submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            submitButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func submitButtonTapped() {
+        // Handle submit button tap action
+    }
+    
+    @objc private func logOutButtonTapped() {
         navigationController?.popToRootViewController(animated: true)
     }
-}
-
-// MARK: - UITableViewDataSource
-extension AdminViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return candidateDetails.count
+    
+    // MARK: - UIPickerView Delegate & DataSource Methods
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CandidateCell", for: indexPath) as! CandidateTableViewCell
-        
-        // Configure the custom cell with candidate details
-        let detail = candidateDetails[indexPath.row]
-        cell.configure(firstName: detail.firstName, lastName: detail.lastName)
-        
-        
-        return cell
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return interviewTypeLabels.count
     }
-}
-
-// MARK: - UITableViewDelegate
-extension AdminViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Handle cell selection here, navigate to InterviewDetailsViewController or perform any other action
-        let selectedCandidate = candidateDetails[indexPath.row]
-        print("Selected candidate: \(selectedCandidate.firstName + selectedCandidate.lastName)")
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return interviewTypeLabels[row]
     }
-}
-
-struct CandidateviewDetail {
-    let firstName: String
-    let lastName: String
-    // Add any other properties you need for the candidate details
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        interviewTypeTextField.text = interviewTypeLabels[row]
+    }
 }

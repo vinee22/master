@@ -18,6 +18,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     var datePicker = UIDatePicker()
     var emailTextField = UITextField()
     var signUpButton = UIButton()
+    
+    var user: Users = Users() // Initialize user directly
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -361,63 +364,53 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @objc func signUpButtonTapped() {
         // Validate user input
-        if let firstName = firstNameTextField.text, !firstName.isEmpty,
+        guard let firstName = firstNameTextField.text, !firstName.isEmpty,
               let lastName = lastNameTextField.text, !lastName.isEmpty,
-              let dateOfBirth = dobTextField.text, !dateOfBirth.isEmpty,
               let email = emailTextField.text, !email.isEmpty,
-           let password = passwordTextField.text, !password.isEmpty{
-            signUpButton.backgroundColor = AppSettings().primaryColor()
-        } else {
+              let password = passwordTextField.text, !password.isEmpty else {
+            // Handle invalid input
             signUpButton.backgroundColor = AppSettings().lowContrastColor()
             return
         }
         
-        // Create a User object
-//        let user = User(firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, email: email, password: password)
+        // Create a Users instance with the entered data
+        let dob = datePicker.date
+        let user = Users(fname: firstName, lname: lastName, email: email, password: password, dob: dob)
         
-        // Save user to CoreData
-//        if saveUserToCoreData(user: user) {
-//            // Successfully saved user, navigate to DashboardViewController
+        // Save the user data to UserDefaults
+        saveUserToUserDefaults(user: user)
+        
+
+            // Pass the user data to the destination view controller
             navigateToDashboard()
-//        } else {
-//            // Failed to save user, handle the error appropriately
-//            print("Failed to save user")
-//        }
+        
     }
 
+    // Method to save user data to UserDefaults
+    func saveUserToUserDefaults(user: Users) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(user.getFirstName(), forKey: "firstName")
+        userDefaults.set(user.getLastName(), forKey: "lastName")
+        userDefaults.set(user.getEmail(), forKey: "email")
+        userDefaults.set(user.getPassword(), forKey: "password")
+        userDefaults.set(user.getDateOfBirth(), forKey: "dob")
+        userDefaults.synchronize()
+        // Use the properties as needed
+        print("First Name: \(user.getFirstName())")
+        print("Last Name: \(user.getLastName())")
+        print("Email: \(user.getEmail())")
+        print("Password: \(user.getPassword())")
+        print("Date of Birth: \(user.getDateOfBirth())")
+    }
+
+
     func navigateToDashboard() {
-        if let dashboardVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DashboardViewController") as? DashboardViewController {
+        if let dashboardVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditAccountViewController") as? EditAccountViewController {
+            // Pass the user data to the destination view controller
             navigationController?.pushViewController(dashboardVC, animated: true)
         }
     }
-
-    func saveUserToCoreData(user: User) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return false
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        guard let entity = NSEntityDescription.entity(forEntityName: "UserEntity", in: managedContext) else {
-            return false
-        }
-        
-        let userObject = NSManagedObject(entity: entity, insertInto: managedContext)
-        userObject.setValue(user.firstName, forKey: "firstName")
-        userObject.setValue(user.lastName, forKey: "lastName")
-        userObject.setValue(user.dateOfBirth, forKey: "dateOfBirth")
-        userObject.setValue(user.email, forKey: "email")
-        userObject.setValue(user.password, forKey: "password")
-        
-        do {
-            try managedContext.save()
-            return true
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-            return false
-        }
-    }
-
+    
     struct User {
         let firstName: String
         let lastName: String
