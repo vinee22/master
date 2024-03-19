@@ -10,6 +10,7 @@ import UIKit
 
 class InterviewCell: UITableViewCell {
     // UI elements for the cell
+    let nameLabel = UILabel()
     let typeLabel = UILabel()
     let dateLabel = UILabel()
     let dottedLineView = UIView() // Dotted line view
@@ -28,19 +29,28 @@ class InterviewCell: UITableViewCell {
 
     private func setupUI() {
         // Configure UI elements
+        contentView.addSubview(nameLabel)
         contentView.addSubview(typeLabel)
         contentView.addSubview(dateLabel)
 
+        nameLabel.textColor = AppSettings().primaryColor()
+        nameLabel.font = UIFont.systemFont(ofSize: 30)
         typeLabel.textColor = AppSettings().primaryColor()
         typeLabel.font = UIFont.systemFont(ofSize: 30)
         dateLabel.textColor = AppSettings().primaryColor()
         dateLabel.font = UIFont.systemFont(ofSize: 15)
   
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         typeLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            typeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+
+            
+            typeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
             typeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             typeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 

@@ -7,17 +7,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4563F98B-7661-4680-8F5B-FD93B4CAAA76"
+            uuid = "5109C13E-33C0-4FEE-A496-93C4A0DCF309"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SwiftHire/UserModel.swift"
+            filePath = "SwiftHire/LoginViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "getFirstName()"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
+            landmarkName = "loginButtonTapped()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5109C13E-33C0-4FEE-A496-93C4A0DCF309 - cb39f64b5ee44174"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftHire.LoginViewController.loginButtonTapped() -&gt; ()"
+                  moduleName = "SwiftHire"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hs/Desktop/HelpDoc/SwiftHire/SwiftHire/LoginViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "216"
+                  endingLineNumber = "216"
+                  offsetFromSymbolStart = "3081">
+               </Location>
+               <Location
+                  uuid = "5109C13E-33C0-4FEE-A496-93C4A0DCF309 - cb39f64b5ee44174"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftHire.LoginViewController.loginButtonTapped() -&gt; ()"
+                  moduleName = "SwiftHire"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hs/Desktop/HelpDoc/SwiftHire/SwiftHire/LoginViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "216"
+                  endingLineNumber = "216"
+                  offsetFromSymbolStart = "3388">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

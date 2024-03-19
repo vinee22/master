@@ -15,6 +15,7 @@
 		4573C9E52BA6D50000A5AD41 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573C9E42BA6D50000A5AD41 /* Checkbox.swift */; };
 		458F7EA52BA3657D0040D032 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458F7EA42BA3657D0040D032 /* DashboardViewController.swift */; };
 		459440342BA63D3600EF04CB /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459440332BA63D3600EF04CB /* PersistenceController.swift */; };
+		459786632BA981D50041AE50 /* AdminModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459786622BA981D50041AE50 /* AdminModel.swift */; };
 		45A0C2012BA486EE00FED62C /* CustomPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A0C2002BA486EE00FED62C /* CustomPushAnimator.swift */; };
 		45A9E4DB2BA33DE300EA05C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A9E4DA2BA33DE300EA05C9 /* AppDelegate.swift */; };
 		45A9E4DD2BA33DE300EA05C9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A9E4DC2BA33DE300EA05C9 /* SceneDelegate.swift */; };
@@ -41,6 +42,7 @@
 		4573C9E42BA6D50000A5AD41 /* Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
 		458F7EA42BA3657D0040D032 /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		459440332BA63D3600EF04CB /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		459786622BA981D50041AE50 /* AdminModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminModel.swift; sourceTree = "<group>"; };
 		45A0C2002BA486EE00FED62C /* CustomPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPushAnimator.swift; sourceTree = "<group>"; };
 		45A9E4D72BA33DE300EA05C9 /* SwiftHire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftHire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45A9E4DA2BA33DE300EA05C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				45A9E4DC2BA33DE300EA05C9 /* SceneDelegate.swift */,
 				45A9E4E32BA33DE300EA05C9 /* SwiftHire.xcdatamodeld */,
 				455C8D042BA5EECB00DC4241 /* UserModel.swift */,
+				459786622BA981D50041AE50 /* AdminModel.swift */,
 			);
 			path = SwiftHire;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				454127282BA3E9EE00C66FC6 /* EditAccountViewController.swift in Sources */,
 				45A9E50A2BA33EAE00EA05C9 /* LoginViewController.swift in Sources */,
 				45A0C2012BA486EE00FED62C /* CustomPushAnimator.swift in Sources */,
+				459786632BA981D50041AE50 /* AdminModel.swift in Sources */,
 				45A9E50D2BA33EAE00EA05C9 /* SignUpViewController.swift in Sources */,
 				45A9E5082BA33EAE00EA05C9 /* SignInSignUpViewController.swift in Sources */,
 				45A9E4DB2BA33DE300EA05C9 /* AppDelegate.swift in Sources */,

@@ -15,8 +15,16 @@ class LoginViewController: UIViewController {
     var passwordTextField = UITextField()
     var loginButton = UIButton()
     
+    var user: Users = Users()
+    
+    var emailcheck = ""
+    var passwordcheck = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.emailcheck = UserDefaults.standard.string(forKey: "email") ?? ""
+        self.passwordcheck = UserDefaults.standard.string(forKey: "password") ?? ""
         
         // Background Image
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
@@ -130,7 +138,6 @@ class LoginViewController: UIViewController {
             dontHaveAccountLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
         
-        
     }
     
     @objc func backButtonTapped() {
@@ -207,18 +214,27 @@ class LoginViewController: UIViewController {
             if let adminVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AdminViewController") as? AdminViewController {
                 navigationController?.pushViewController(adminVC, animated: true)
             }
-        }else if email == "test@guest.com" && password == "Test@123" {
-            // Navigate to AdminViewController
+        }else if emailTextField.text == emailcheck && passwordTextField.text == passwordcheck {
+            // Navigate to DashboardViewController
             if let adminVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditAccountViewController") as? EditAccountViewController {
                 navigationController?.pushViewController(adminVC, animated: true)
             }
         }else {
-            // Navigate to DashboardViewController
-            if let dashboardVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditAccountViewController") as? EditAccountViewController {
-                navigationController?.pushViewController(dashboardVC, animated: true)
+            // Do not move to DashboardViewController
+            // Create the alert controller
+             let alertController = UIAlertController(title: "Alert", message: "Invalid Credential", preferredStyle: .alert)
+             
+             // Create the OK action
+             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+             
+             // Add the OK action to the alert controller
+             alertController.addAction(okAction)
+             
+             // Present the alert controller
+             present(alertController, animated: true, completion: nil)
+         print("Invalid Credential")
             }
         }
-    }
 
     
     @objc func isValidEmail(_ email: String) -> Bool {

@@ -25,7 +25,6 @@ class AdminViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         // Background Image
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
         backgroundImage.image = UIImage(named: "BackgroundImage")
@@ -34,7 +33,6 @@ class AdminViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         
         // Navigation Bar
         title = AppSettings().adminScreenTitle()
-        
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: AppSettings().primaryColor(),
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 30) // Adjust font size as needed
@@ -43,21 +41,39 @@ class AdminViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         
         // Load the original images
         guard let logOutImage = UIImage(named: "logoutIcon") else { return }
-        // Resize the back icon image
         let resizedlogOutImage = logOutImage.resized(to: CGSize(width: 30, height: 30))
-        
-        // Tint the resized images
         let tintedlogOutImage = resizedlogOutImage.withTintColor(AppSettings().primaryColor(), renderingMode: .alwaysOriginal)
-        
         let logOutButton = UIBarButtonItem(image: tintedlogOutImage, style: .plain, target: self, action: #selector(logOutButtonTapped))
         navigationItem.leftBarButtonItem = logOutButton
-
         
+        // Create flexible space item
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+        // Create done button
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
+        
+        guard let NoticationImage = UIImage(named: "NotificationIcon") else { return }
+        
+        let resizedNoticationImage = NoticationImage.resized(to: CGSize(width: 30, height: 30))
+        
+        let tintedNoticationImage = resizedNoticationImage.withTintColor(AppSettings().primaryColor(), renderingMode: .alwaysOriginal)
+        
+        let noticationButton = UIBarButtonItem(image: tintedNoticationImage, style: .plain, target: self, action: #selector(noticationButtonTapped))
+        
+        navigationItem.rightBarButtonItem = noticationButton
+
+        // Create toolbar
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 44))
+        toolbar.items = [flexibleSpace, doneButton]
+
+        // Assign toolbar as input accessory view
+        interviewTypeTextField.inputAccessoryView = toolbar
+
+        // Set up UI
         setupUI()
     }
     
     // MARK: - UI Setup
-    
     private func setupUI() {
         // Candidate Name Text Field
         candidateNameTextField.placeholder = "Candidate Name"
@@ -67,8 +83,8 @@ class AdminViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         // Interview Type Text Field
         interviewTypeTextField.placeholder = "Select Interview Types"
         interviewTypeTextField.borderStyle = .roundedRect
-        interviewTypeTextField.inputView = interviewTypePicker
-        view.addSubview(interviewTypeTextField)
+        interviewTypeTextField.inputView = interviewTypePicker // Set inputView to show the picker view
+        view.addSubview(interviewTypeTextField) // Add text field to the view
         
         // Interview Type Picker
         interviewTypePicker.delegate = self
@@ -94,7 +110,6 @@ class AdminViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         
         setupConstraints()
     }
-    
     private func setupConstraints() {
         // Candidate Name Text Field Constraints
         candidateNameTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -143,13 +158,69 @@ class AdminViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     // MARK: - Actions
     
     @objc private func submitButtonTapped() {
-        // Handle submit button tap action
+        // Retrieve data from UI elements
+        let candidateName = candidateNameTextField.text ?? ""
+        let interviewType = interviewTypeTextField.text ?? ""
+        let interviewDate = datePicker.date
+        let interviewTime = timePicker.date
+        
+        // Create an instance of the Admin model
+        let admin = Admin(cname: candidateName, interviewtype: interviewType, idate: interviewDate, itime: interviewTime)
+        
+        // Save the Admin data as needed (e.g., to UserDefaults)
+        saveUserToAdminDefaults(admin: admin)
+        let alertController = UIAlertController(title: "Success", message: "Interview Scheduled", preferredStyle: .alert)
+           
+           // Create the OK action
+           let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+           
+           // Add the OK action to the alert controller
+           alertController.addAction(okAction)
+           
+           // Present the alert controller
+           present(alertController, animated: true, completion: nil)
     }
+
+    // Save the Admin data to UserDefaults
+    func saveUserToAdminDefaults(admin: Admin) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(admin.cname, forKey: "candidateName")
+        userDefaults.set(admin.interviewtype, forKey: "interviewType")
+        userDefaults.set(admin.idate, forKey: "interviewDate")
+        userDefaults.set(admin.itime, forKey: "interviewTime")
+        userDefaults.synchronize()
+        
+        // Use the properties as needed
+        print("Candidate Name: \(admin.getCandidateName())")
+        print("Interview Type: \(admin.getInterviewType())")
+        print("Interview Date: \(admin.getInterviewDate())")
+        print("Interview Time: \(admin.getInterviewTime())")
+    }
+
     
     @objc private func logOutButtonTapped() {
-        navigationController?.popToRootViewController(animated: true)
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to Log Out?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        
+        present(alert, animated: true, completion: nil)
     }
     
+    @objc func noticationButtonTapped(_ sender: UIBarButtonItem) {
+        if let dashboardVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DashboardViewController") as? DashboardViewController {
+            navigationController?.pushViewController(dashboardVC, animated: true)
+        }    }
+    
+    @objc func doneButtonTapped() {
+        // Dismiss the keyboard or hide the date picker when the "Done" button is tapped
+        interviewTypeTextField.resignFirstResponder()
+    }
     // MARK: - UIPickerView Delegate & DataSource Methods
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -165,6 +236,7 @@ class AdminViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        interviewTypeTextField.text = interviewTypeLabels[row]
+        interviewTypeTextField.text = interviewTypeLabels[row] // Update text field when a row is selected
     }
+    
 }

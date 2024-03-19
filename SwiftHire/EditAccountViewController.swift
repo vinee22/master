@@ -9,12 +9,12 @@ import Foundation
 import UIKit
 
 class EditAccountViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIDocumentPickerDelegate, UITextFieldDelegate {
-
+    
     // IBOutlet for Image View
     @IBOutlet weak var imageView: UIImageView!
     
-    var user: User? // Property to hold the user data
-        
+    var user: Users = Users() // Property to hold the user data
+    
     @IBOutlet weak var submitButton: UIButton!
     // Custom date picker for "Date of Birth"
     let datePicker = UIDatePicker()
@@ -30,7 +30,7 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
     var passwordTextField = UITextField()
     
     // Outlet for the submit button
-//    var submitButton: UIButton!
+    //    var submitButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,9 +62,9 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
         navigationItem.leftBarButtonItem = logOutButton
         
         guard let NoticationImage = UIImage(named: "NotificationIcon") else { return }
-
+        
         let resizedNoticationImage = NoticationImage.resized(to: CGSize(width: 30, height: 30))
-
+        
         let tintedNoticationImage = resizedNoticationImage.withTintColor(AppSettings().primaryColor(), renderingMode: .alwaysOriginal)
         
         let noticationButton = UIBarButtonItem(image: tintedNoticationImage, style: .plain, target: self, action: #selector(noticationButtonTapped))
@@ -77,7 +77,7 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(tapGesture)
         
-//        pdfPickerButton.addTarget(self, action: #selector(pdfPickerButtonTapped(_:)), for: .touchUpInside)
+        //        pdfPickerButton.addTarget(self, action: #selector(pdfPickerButtonTapped(_:)), for: .touchUpInside)
         
         firstNameTextField.placeholder = AppSettings().signupFirstNamePlaceholderText()
         firstNameTextField.borderStyle = .roundedRect
@@ -129,6 +129,7 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
         emailAddressTextField.borderStyle = .roundedRect
         emailAddressTextField.layer.borderColor = AppSettings().highContrastColor().cgColor
         emailAddressTextField.layer.borderWidth = 1
+        emailAddressTextField.isUserInteractionEnabled = false
         emailAddressTextField.layer.cornerRadius = 10
         emailAddressTextField.backgroundColor = AppSettings().highContrastColor()
         self.view.addSubview(emailAddressTextField)
@@ -139,7 +140,7 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
         passwordTextField.textColor = AppSettings().backgroundColor()
         passwordTextField.autocapitalizationType = .none
         passwordTextField.layer.cornerRadius = 10
-        passwordTextField.isUserInteractionEnabled = false
+//        passwordTextField.isUserInteractionEnabled = false
         passwordTextField.backgroundColor = AppSettings().highContrastColor()
         self.view.addSubview(passwordTextField)
         
@@ -158,51 +159,60 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
         emailAddressTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         submitButton.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-               imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-               imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
-               imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100),
-               
-               firstNameTextField.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
-               firstNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-               firstNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-               firstNameTextField.heightAnchor.constraint(equalToConstant: 50),
-
-               lastNameTextField.topAnchor.constraint(equalTo: firstNameTextField.bottomAnchor, constant: 10),
-               lastNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-               lastNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-               lastNameTextField.heightAnchor.constraint(equalToConstant: 50),
-
-               dateOfBirthTextField.topAnchor.constraint(equalTo: lastNameTextField.bottomAnchor, constant: 10),
-               dateOfBirthTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-               dateOfBirthTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-               dateOfBirthTextField.heightAnchor.constraint(equalToConstant: 50),
-
-               emailAddressTextField.topAnchor.constraint(equalTo: dateOfBirthTextField.bottomAnchor, constant: 10),
-               emailAddressTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-               emailAddressTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-               emailAddressTextField.heightAnchor.constraint(equalToConstant: 50),
-               
-               passwordTextField.topAnchor.constraint(equalTo: emailAddressTextField.bottomAnchor, constant: 10),
-               passwordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-               passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-               passwordTextField.heightAnchor.constraint(equalToConstant: 50),
-
-               submitButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
-               submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-               submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-               submitButton.heightAnchor.constraint(equalToConstant: 50),
-           ])
         
-        // Check if user data is available
-        if let user = user {
-            // Set user data to text fields
-            firstNameTextField.text = user.firstName
-            lastNameTextField.text = user.lastName
-            emailAddressTextField.text = user.email
-            passwordTextField.text = user.password
-        }
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100),
+            
+            firstNameTextField.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
+            firstNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            firstNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            firstNameTextField.heightAnchor.constraint(equalToConstant: 50),
+            
+            lastNameTextField.topAnchor.constraint(equalTo: firstNameTextField.bottomAnchor, constant: 10),
+            lastNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            lastNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            lastNameTextField.heightAnchor.constraint(equalToConstant: 50),
+            
+            dateOfBirthTextField.topAnchor.constraint(equalTo: lastNameTextField.bottomAnchor, constant: 10),
+            dateOfBirthTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            dateOfBirthTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            dateOfBirthTextField.heightAnchor.constraint(equalToConstant: 50),
+            
+            emailAddressTextField.topAnchor.constraint(equalTo: dateOfBirthTextField.bottomAnchor, constant: 10),
+            emailAddressTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            emailAddressTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            emailAddressTextField.heightAnchor.constraint(equalToConstant: 50),
+            
+            passwordTextField.topAnchor.constraint(equalTo: emailAddressTextField.bottomAnchor, constant: 10),
+            passwordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 50),
+            
+            submitButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
+            submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            submitButton.heightAnchor.constraint(equalToConstant: 50),
+        ])
+        
+        // Retrieve user data from UserDefaults
+        let userDefaults = UserDefaults.standard
+        let firstName = userDefaults.string(forKey: "firstName") ?? ""
+        let lastName = userDefaults.string(forKey: "lastName") ?? ""
+        let email = userDefaults.string(forKey: "email") ?? ""
+        let password = userDefaults.string(forKey: "password") ?? ""
+        let dob = userDefaults.object(forKey: "dob") as? Date ?? Date()
+
+        // Display user data in labels
+        firstNameTextField.text = "\(firstName)"
+        lastNameTextField.text = "\(lastName)"
+        emailAddressTextField.text = "\(email)"
+        passwordTextField.text = "\(password)"
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateOfBirthTextField.text = "\(dateFormatter.string(from: dob))"
         
     }
     
@@ -240,21 +250,42 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     // Action method for the submit button
-   @objc func submitButtonTapped() {
-                                   // Retrieve data from text fields, image view, and PDF file name text field
-                                   let firstName = firstNameTextField.text ?? ""
-                                   let lastName = lastNameTextField.text ?? ""
-                                   let dateOfBirth = dateOfBirthTextField.text ?? ""
-                                   let emailAddress = emailAddressTextField.text ?? ""
-                                   let password = passwordTextField.text ?? ""
-                                   // Perform actions with the retrieved data, such as storing it or updating the stored details and files
-
-                                   // Show alert
-                                   let alert = UIAlertController(title: "Success", message: "Data successfully saved", preferredStyle: .alert)
-                                   alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                   present(alert, animated: true, completion: nil)
-                               }
-
+    @objc func submitButtonTapped() {
+        guard let firstName = firstNameTextField.text, !firstName.isEmpty,
+              let lastName = lastNameTextField.text, !lastName.isEmpty,
+              let email = emailAddressTextField.text,
+              let password = passwordTextField.text, !password.isEmpty else {
+            submitButton.backgroundColor = AppSettings().lowContrastColor()
+            return
+        }
+        // Perform actions with the retrieved data, such as storing it or updating the stored details and files
+        let dob = datePicker.date
+        let user = Users(fname: firstName, lname: lastName, email: email, password: password, dob: dob)
+        
+        saveUserToUserDefaults(user: user)
+        // Show alert
+        let alert = UIAlertController(title: "Success", message: "Data successfully saved", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // Method to save user data to UserDefaults
+    func saveUserToUserDefaults(user: Users) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(user.getFirstName(), forKey: "firstName")
+        userDefaults.set(user.getLastName(), forKey: "lastName")
+        userDefaults.set(user.getEmail(), forKey: "email")
+        userDefaults.set(user.getPassword(), forKey: "password")
+        userDefaults.set(user.getDateOfBirth(), forKey: "dob")
+        userDefaults.synchronize()
+        // Use the properties as needed
+        print("First Name: \(user.getFirstName())")
+        print("Last Name: \(user.getLastName())")
+        print("Email: \(user.getEmail())")
+        print("Password: \(user.getPassword())")
+        print("Date of Birth: \(user.getDateOfBirth())")
+    }
+    
     @objc func noticationButtonTapped(_ sender: UIBarButtonItem) {
         if let dashboardVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DashboardViewController") as? DashboardViewController {
             navigationController?.pushViewController(dashboardVC, animated: true)
@@ -265,16 +296,26 @@ class EditAccountViewController: UIViewController, UIImagePickerControllerDelega
         dateOfBirthTextField.resignFirstResponder()
     }
     
-        @objc func logOutButtonTapped() {
-            navigationController?.popToRootViewController(animated: true)
+    @objc func logOutButtonTapped() {
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to Log Out?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            self.navigationController?.popToRootViewController(animated: true)
         }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
     
-}
-
-struct User {
-    var firstName: String
-    var lastName: String
-    var email: String
-    var password: String
-    // Other properties and methods
+    struct User {
+        let firstName: String
+        let lastName: String
+        let dateOfBirth: String
+        let email: String
+        let password: String
+    }
+    
 }
