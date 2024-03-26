@@ -316,9 +316,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
     
     func getLocationAndFetchWeatherData() {
         // Create a CLLocationManager instance
-        let locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
     }
     
