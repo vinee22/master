@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-class HomeViewController: UIViewController, CLLocationManagerDelegate {
+class HomeViewController: UIViewController, CLLocationManagerDelegate, UIScrollViewDelegate {
     
     var cityLabel: UILabel!
     var countryLabel: UILabel!
@@ -26,6 +26,30 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Weather Forecast"
+        let titleLabel = UILabel()
+        titleLabel.text = title
+        titleLabel.textColor = .white
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        titleLabel.sizeToFit()
+        
+        navigationItem.titleView = titleLabel
+        
+        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 44))
+        customView.backgroundColor = .clear
+        
+        let currentLocationButton = UIButton(type: .system)
+        currentLocationButton.setImage(UIImage(named: "CurrentLocationIcon"), for: .normal)
+        currentLocationButton.tintColor = UIColor.white
+        currentLocationButton.frame = CGRect(x: 0, y: 10, width: 30, height: 30)
+        currentLocationButton.addTarget(self, action: #selector(showCurrentLocationWeather), for: .touchUpInside)
+        
+        customView.addSubview(currentLocationButton)
+        
+        let leftBarButtonItem = UIBarButtonItem(customView: customView)
+        
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+        
         setupUI()
         
         // Request location permission
@@ -36,13 +60,19 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func setupUI(){
+        
         let backgroundImage = UIImage(named: "BackgrounImage")
         backgroundImageView = UIImageView(frame: self.view.bounds)
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.image = backgroundImage
-        self.view.addSubview(backgroundImageView)
+        view.addSubview(backgroundImageView)
         
-        borderLabel = UILabel(frame: CGRect(x: 20, y: 300, width: view.frame.width - 40, height: 300))
+        let scrollView = UIScrollView(frame: CGRect(x: 0, y: navigationController?.navigationBar.frame.maxY ?? 0, width: view.bounds.width, height: view.bounds.height - (navigationController?.navigationBar.frame.maxY ?? 0)))
+        scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        scrollView.delegate = self
+        view.addSubview(scrollView)
+        
+        borderLabel = UILabel(frame: CGRect(x: 20, y: 220, width: view.frame.width - 40, height: 300))
         borderLabel.backgroundColor = .clear
         borderLabel.layer.cornerRadius = 5
         borderLabel.layer.opacity = 0.5
@@ -50,11 +80,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         borderLabel.layer.borderWidth = 10
         borderLabel.layer.masksToBounds = true
         borderLabel.layer.borderColor = UIColor.white.cgColor
-        view.addSubview(borderLabel)
+        scrollView.addSubview(borderLabel)
         
         
         // Create temperature label
-        temperatureLabel = UILabel(frame: CGRect(x: 0, y: 180, width: view.frame.width - 60, height: 100))
+        temperatureLabel = UILabel(frame: CGRect(x: 0, y: 170, width: view.frame.width - 60, height: 100))
         temperatureLabel.textAlignment = .right
         temperatureLabel.textColor = .white
         temperatureLabel.shadowColor = .black
@@ -62,7 +92,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         borderLabel.addSubview(temperatureLabel)
         
         // Create condition label
-        conditionLabel = UILabel(frame: CGRect(x: 0, y: 150, width: view.frame.width - 60, height: 30))
+        conditionLabel = UILabel(frame: CGRect(x: 0, y: 120, width: view.frame.width - 60, height: 30))
         conditionLabel.textAlignment = .right
         conditionLabel.textColor = .white
         conditionLabel.shadowColor = .black
@@ -76,7 +106,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         cityLabel.font = UIFont.systemFont(ofSize: 30)
         borderLabel.addSubview(cityLabel)
         
-        countryLabel = UILabel(frame: CGRect(x: 0, y: 100, width: view.frame.width - 60, height: 30))
+        countryLabel = UILabel(frame: CGRect(x: 0, y: 90, width: view.frame.width - 60, height: 30))
         countryLabel.textAlignment = .right
         countryLabel.textColor = .white
         countryLabel.shadowColor = .black
@@ -89,12 +119,12 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         borderLabel.addSubview(weatherIconImageView)
         
         // Create city search text field
-        citySearch = UITextField(frame: CGRect(x: 20, y: 100, width: view.frame.width - 40, height: 50))
+        citySearch = UITextField(frame: CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 50))
         citySearch.placeholder = "Enter City Name"
         citySearch.borderStyle = .roundedRect
         citySearch.layer.cornerRadius = 25
         citySearch.layer.masksToBounds = true
-        view.addSubview(citySearch)
+        scrollView.addSubview(citySearch)
         
         // Create search button
         let searchButton = UIButton(type: .system)
@@ -103,11 +133,11 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         searchButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         searchButton.backgroundColor = .white
         searchButton.layer.cornerRadius = 25
-        searchButton.frame = CGRect(x: 100, y: 180, width: view.frame.width - 200, height: 50)
+        searchButton.frame = CGRect(x: 100, y: 150, width: view.frame.width - 200, height: 50)
         searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
-        view.addSubview(searchButton)
+        scrollView.addSubview(searchButton)
         
-        humidityLabel = UILabel(frame: CGRect(x: 20, y: 650, width: view.frame.width - 40, height: 40))
+        humidityLabel = UILabel(frame: CGRect(x: 20, y: 570, width: view.frame.width - 40, height: 40))
         humidityLabel.textAlignment = .center
         humidityLabel.textColor = .white
         humidityLabel.shadowColor = .black
@@ -118,9 +148,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         humidityLabel.layer.borderWidth = 5
         humidityLabel.layer.cornerRadius = 5
         humidityLabel.font = UIFont.systemFont(ofSize: 20)
-        view.addSubview(humidityLabel)
+        scrollView.addSubview(humidityLabel)
         
-        windLabel = UILabel(frame: CGRect(x: 20, y: 700, width: view.frame.width - 40, height: 40))
+        windLabel = UILabel(frame: CGRect(x: 20, y: 620, width: view.frame.width - 40, height: 40))
         windLabel.textAlignment = .center
         windLabel.textColor = .white
         windLabel.shadowColor = .black
@@ -131,9 +161,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         windLabel.layer.borderWidth = 5
         windLabel.layer.cornerRadius = 5
         windLabel.font = UIFont.systemFont(ofSize: 20)
-        view.addSubview(windLabel)
+        scrollView.addSubview(windLabel)
         
-        pressureLabel = UILabel(frame: CGRect(x: 20, y: 750, width: view.frame.width - 40, height: 40))
+        pressureLabel = UILabel(frame: CGRect(x: 20, y: 680, width: view.frame.width - 40, height: 40))
         pressureLabel.textAlignment = .center
         pressureLabel.textColor = .white
         pressureLabel.shadowColor = .black
@@ -144,14 +174,9 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate {
         pressureLabel.layer.borderWidth = 5
         pressureLabel.layer.cornerRadius = 5
         pressureLabel.font = UIFont.systemFont(ofSize: 20)
-        view.addSubview(pressureLabel)
+        scrollView.addSubview(pressureLabel)
         
-        let currentLocationButton = UIButton(type: .system)
-        currentLocationButton.addTarget(self, action: #selector(showCurrentLocationWeather), for: .touchUpInside)
-        currentLocationButton.setImage(UIImage(named: "CurrentLocationIcon"), for: .normal)
-        currentLocationButton.tintColor = UIColor.white
-        currentLocationButton.frame = CGRect(x: 20, y: 50, width: 30, height: 30)
-        view.addSubview(currentLocationButton)
+        scrollView.contentSize = CGSize(width: view.bounds.width, height: 720)
         
     }
     

@@ -51,7 +51,6 @@
 			isa = PBXGroup;
 			children = (
 				45E742EB2BB17A1F00C8176F /* Assets.xcassets */,
-				45E742ED2BB17A1F00C8176F /* LaunchScreen.storyboard */,
 				45E742F02BB17A1F00C8176F /* Info.plist */,
 			);
 			path = Resources;
@@ -68,6 +67,7 @@
 		45B274C82BB1E770001D7F9C /* StoryBoard */ = {
 			isa = PBXGroup;
 			children = (
+				45E742ED2BB17A1F00C8176F /* LaunchScreen.storyboard */,
 				45E742E82BB17A1C00C8176F /* Main.storyboard */,
 			);
 			path = StoryBoard;
